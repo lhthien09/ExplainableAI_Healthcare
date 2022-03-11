@@ -4,7 +4,15 @@ _Github for Topic of prioritizing end-stage patients awaiting for transplantatio
 
 ## Overview
 
-In the US, for end-stage liver patients...
+In the scope of the course Machine Learning Workshop, we would like to perform the analysis and
+investigate the possibility of using ML models in the feld of medicine. In detailed, the States currently
+adopts Sickest-First Policy, which means for the patients having end-stage disease (e.g: end-stage liver
+disease) and requiring transplantation a new organ, there is a formula used to assess the severity of
+patients, afterwards, place them on the waiting list. The sicker the patient is, the higher place he/she is
+on the waiting list, and when compatible donated organs from deceased donors, sooner that patient will
+get transplanted.
+In our study, we will place our emphasis for liver transplant. To assess the severity of end-stage liver
+patients, physicians in the US are using MELD-Score formula:
 
 
 
