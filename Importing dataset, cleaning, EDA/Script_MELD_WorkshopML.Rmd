@@ -1,0 +1,206 @@
+---
+title: 'WdML no. 1: Cleaning Data & Exploratory Data Analysis'
+author: "Hoang Thien Ly"
+date: "4/14/2022"
+output:
+  pdf_document: default
+  html_document: default
+---
+
+
+In this script, we will include steps of **importing dataset**, **cleaning** and **EDA** for OPTN waiting list history from the **STAR (Standard Transplant Analysis and Research)** file for adult liver transplant candidates. Our dataset would be later divided into training, validation and test set respecting to the proportion of 50-20-30%. 
+
+<br>
+<br>
+
+### Loading needed libraries:
+```{r, load_library, message=FALSE, warning= FALSE, eval=F, echo=T}
+library(haven) # to load data in SAS form
+library(dplyr) # for data processing
+library(readr)
+```
+<br>
+<br>
+
+### Import dataset:
+To get access to STAR_SAS datasets of organ transplants, we need to write a form to [United Network for Organ Sharing](https://unos.org). The received file contains info of CODE Dictionary - formats, SAS Dataset, STAR File Documentation and National Star File Documentation. To be specific, we can find in folder SAS Dataset all data related to different organ transplantation performed in the United States of America: **Intestine**, **Kidney**, **Liver**, **Thoracic** and **VCA**. But we will use only data of liver.
+
+To have more info about meaning of features in dataset, we need to look up in file STAR File Documentation.xlsx in folder STAR_SAS. Now, we will load the liver dataset. This file includes one repord per liver waiting list registration and/or transplant. Transplant evens identified by TRR_ID_CODE. Then we will define our ML problem is: binary classification problem. Whether patient receives transplantation (TRR_ID_CODE not NULL) or being removed due to too sick/ death while waiting on waiting list.
+
+```{r, load_data, message = FALSE, eval=F, echo=T}
+setwd("C:/Users/DELL/OneDrive - Politechnika Warszawska/STAR_SAS/STAR_SAS/SAS Dataset 202109/Liver")
+df <- read_sas("liver_data.sas7bdat")
+```
+
+```{r, eval=F, echo=T}
+dim(df)
+```
+
+This dataset contains: 329468 observations and 426 features, some features are: AGE (recipient age), CREAT_TX (recipient serum Creatinine at time of Tx), Death_Date (date of death for patient that died on waiting list), education (recipient highest education), ethnicity (recipient ethnicity),... (the excel file of info: finding in STAR File Documentation.xlsx).
+
+<br>
+<br>
+
+### Cleaning dataset:
+Firstly, we only choose features that seem to be significant for our model (by reading to their meaning, especially, all lab test indices are chosen). Infomation of medical record of deceased donors would be removed. 
+
+```{r, choosing_features, message = FALSE, eval=F, echo=T}
+liver_data <- df    %>% select("ALBUMIN_TX","ASCITES_TX","BW4","BW6","C1","C2",
+                               "CREAT_TX","DQ1","DQ2","DR51","DR51_2","DR52",
+                               "DR52_2","DR53","DR53_2","ENCEPH_TX",
+                               "FINAL_ALBUMIN","FINAL_ASCITES","FINAL_BILIRUBIN",
+                               "FINAL_CTP_SCORE","FINAL_DIALYSIS_PRIOR_WEEK",
+                               "FINAL_ENCEPH","FINAL_INR","FINAL_MELD_OR_PELD",
+                               "FINAL_MELD_PELD_LAB_SCORE","FINAL_SERUM_CREAT",
+                               "FINAL_SERUM_SODIUM", "INIT_ALBUMIN","INIT_ASCITES",
+                               "INIT_BILIRUBIN","INIT_CTP_SCORE",                                                 "INIT_ENCEPH","INIT_INR","INIT_MELD_OR_PELD",
+                               "INIT_MELD_PELD_LAB_SCORE",
+                               "INIT_SERUM_CREAT",
+                               "INIT_SERUM_SODIUM",
+                               "INR_TX",
+                               "NUM_PREV_TX",
+                               "REM_CD", "TBILI_TX", "TRR_ID_CODE")
+```
+
+For the patients get transplanted, they would be assigned a code to the column **TRR_ID_CODE**. 
+
+```{r, assign_target, message= FALSE, eval=F, echo=T}
+liver_data$TRR_ID_CODE[liver_data$TRR_ID_CODE == ""]<- NA
+```
+
+Now, for the patients currently in our dataframe, one group for patients transplated livers, remaining we don't have info. But the info is in feature: **REM_CD** - reason for removal from the waiting list. We can read the code SAS Analysis Format of this variable: *REMCD*, then using the table to decode: *LIVER_FORMATS_FLATFILE.DAT*. 
+
+
+```{r REM_CD, echo=FALSE, fig.cap="Reason for removal from waiting list", out.width = '60%'}
+knitr::include_graphics("C:/Users/DELL/OneDrive/Desktop/ML_Wd/REM_CD_1.png")
+```
+
+So for our ML problem of classifying and understanding factors influencing the outcome of transplantation (as well as, determine, what influence to cause the death of patients on waiting list). So, we will only extract info of sucessful transplant cases and those patients removed from waiting list due to reason 8, 13, 21, 23.
+
+```{r, extracting features, message= FALSE, eval=F, echo=T}
+liver_data2 <- liver_data %>% filter( !is.na(TRR_ID_CODE) | REM_CD %in% c(8,13,21,23))
+liver_data2 <- liver_data2 %>% mutate(Transplanted_perform = ifelse(!is.na(TRR_ID_CODE),1,0))
+liver_data2 <- liver_data2 %>% select(-c(REM_CD,TRR_ID_CODE))
+
+UNOS_liver <- liver_data2 %>% select(-FINAL_DIALYSIS_PRIOR_WEEK, 
+                                      -FINAL_CTP_SCORE, 
+                                      -FINAL_MELD_OR_PELD,
+                                      -INIT_MELD_OR_PELD,
+                                      -INIT_CTP_SCORE)
+
+dim(UNOS_liver)
+```
+
+Eventually, we have the dataset *UNOS_liver* of 257315 observations and 38 features.  
+<br>
+<br>
+
+### Step of Exploratory Data Analysis:  
+
+```{r, head, message= FALSE, eval=F, echo=T}
+head(UNOS_liver)
+```
+
+![head of dataset.](C:/Users/DELL/OneDrive/Desktop/ML_Wd/Head_UNOS.png)
+> Comment: Lots of NAs
+<br>
+
+```{r, str, message= FALSE, eval=F, echo=T}
+str(UNOS_liver)
+```
+
+![str of dataset.](C:/Users/DELL/OneDrive/Desktop/ML_Wd/str_UNOS.png)
+
+All features are continuous (results of lab tests).
+
+```{r, remove_columns, message= FALSE, eval=F, echo=T}
+## Checking numbers of NAs:
+x <- colSums(is.na(UNOS_liver))/nrow(UNOS_liver) # Some columns include over 40% of NAs.
+                                            # except Transplanted_perform, all of
+                                            # remained features having NAs.
+x[x>0.3]
+
+## We remove columns having higher 30% of NAs:
+UNOS_liver <- UNOS_liver %>% select(-c("ASCITES_TX",
+                                       "ENCEPH_TX",
+                                       "FINAL_SERUM_SODIUM",
+                                       "INIT_MELD_PELD_LAB_SCORE",
+                                       "INIT_SERUM_SODIUM",
+                                       "INR_TX"))
+```
+
+<br>
+
+#### Outcome distribution:  
+
+<br />
+
+![](C:/Users/DELL/OneDrive/Desktop/ML_Wd/outcome_dist.png)  
+<br />
+
+![](C:/Users/DELL/OneDrive/Desktop/ML_Wd/num_outcome_dist.png)  
+
+<br />
+
+> Comment: Our dataset is quite balanced for binary classification problem.
+
+
+#### Final Albumin when performed transplantation:  
+
+<br />
+
+![](C:/Users/DELL/OneDrive/Desktop/ML_Wd/final_albumin.png)
+
+> Comment: Most patients died at Final_Albumin 3 and also most transplant cases are performed sucessfully at Final Albumin 3.
+
+
+#### Creatinine TX:  
+
+<br />
+
+![](C:/Users/DELL/OneDrive/Desktop/ML_Wd/creat_tx.png)
+
+> Comment: dataset is right-skewed. All critically deceased recipient passed away while transplanting at Creat_tx around 1.1
+
+
+#### Albumin TX:  
+
+<br />
+
+![](C:/Users/DELL/OneDrive/Desktop/ML_Wd/albu_tx.png)
+
+
+#### Final Bilirubin:  
+
+<br />
+
+![](C:/Users/DELL/OneDrive/Desktop/ML_Wd/final_bili.png)
+
+
+#### Final Ascities:  
+
+<br />
+
+![](C:/Users/DELL/OneDrive/Desktop/ML_Wd/final_asci.png)
+
+<br>
+
+#### Final INR:  
+
+<br />
+
+![](C:/Users/DELL/OneDrive/Desktop/ML_Wd/final_inr.png)
+
+<br />
+
+#### Density Plot for continuous vars  
+
+<br />
+
+![](C:/Users/DELL/OneDrive/Desktop/ML_Wd/con_vars.png)
+
+
+
+
+
+
