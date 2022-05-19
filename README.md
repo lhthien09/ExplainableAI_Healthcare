@@ -74,4 +74,6 @@ human life.
 ## References:
 - Bertsimas, D., Kung, J., Trichakis, N., Wang, Y., Hirose, R., Vagefi, P.: Development and validation of an optimized prediction of mortality for candidates awaiting liver transplantation.Am. J. Transplantat. 19, 1109–1118 (2018)
 - Byrd J., Balakrishnan S., Jiang X., Lipton Z.C. (2021): Predicting Mortality in Liver Transplant Candidates. In Shaban-Nejad A., Michalowski M., Buckeridge D.L. (eds) Explainable AI in Healthcare and Medicine. Studies in Computational Intelligence, vol 914. Springer, Cham.
+- Waiting List, MELD Score, Liver Transplants — Dr. Robert S.Brown
+- Liver Transplant Waitlist, Part 1— UCLA Transplantation Services
 - UNOS.org
