@@ -14,7 +14,7 @@ get transplanted.
 In our study, we will place our emphasis for liver transplant. To assess the severity of end-stage liver
 patients, physicians in the US are using MELD-Score formula:
 
-<img src="https://render.githubusercontent.com/render/math?math=MELD = 3.78 \times \ln{[Bili(mg/dL)]}  \Plus 11.2 \times \ln{[INR]} \Plus 9.57 \times \ln{[Creati(mg/dL)]} \Plus 6.43">
+<img src="https://render.githubusercontent.com/render/math?math=MELD = 3.78 \times \ln{[Bili(mg/dL)]}  \+ 11.2 \times \ln{[INR]} \+ 9.57 \times \ln{[Creati(mg/dL)]} \Plus 6.43">
 
 
 where: 
