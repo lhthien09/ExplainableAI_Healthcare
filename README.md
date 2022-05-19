@@ -36,8 +36,14 @@ outcome may not be equally strong for all patients, and MELD may not accurately 
 of their conditions.
 
 
-## Usage
+## ML Models:
 
+**Data set**: Organ Procurement and Transplantation Network (OPTN) Standard Transplant Analysis
+and Research (STAR) dataset.
+
+**Target**: Probability of patients dying or becoming unsuitable for transplant within 3 months.
+
+**Metric**:  out-of-sample area under the curve (AUC).
 
 ## References:
 - Bertsimas, D., Kung, J., Trichakis, N., Wang, Y., Hirose, R., Vagefi, P.: Development and validation of an optimized prediction of mortality for candidates awaiting liver transplantation.Am. J. Transplantat. 19, 1109–1118 (2018)
