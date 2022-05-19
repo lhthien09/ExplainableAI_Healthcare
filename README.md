@@ -54,8 +54,21 @@ S., Jiang X., Lipton Z.C. (2021) Predicting Mortality in Liver Transplant Candid
 030-53352-631)
 
 The outcomes from those study are slightly better in term of higher AUC than the traditional MELDScore model. But the question turns out to be, in the phase of deployment those models, is the model trust-worthy? Is the model being fair between ethnicity or gender? Do the important features taken after first model training cycle go alongside with domain knowledge from medical doctors? For single new instance, will the implemented model perform well?
+
 With the hope of replying those questions, we will try to reproduce the results from their study then apply XAI Methods to partially answers those questions.
 
+## About the focal project:
+
+Partial Dependence Profile, Break Down method, Permutation-based variable important and Shapley values will be calculated to provide explanations for first-cycle of training models. Technical requirements:
+- Programming language: R
+- Needed packages: xgboost, LightGBM, catboost, ranger, caret, forester, DALEX (for explaining models) and fairmodels (arXiv: 2104.00607)
+- Member: Hoang Thien Ly
+- Report in RMarkdown + Presentation slides
+
+As in any new projects, the model performances can turn out to be lower than expectation. But the
+main aim of this project is to build models responsible and to have applicable models in the field of
+medicine, which requires transparent and explanations to making even smallest decisions related to
+human life.
 
 
 ## References:
