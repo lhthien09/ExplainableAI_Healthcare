@@ -2,6 +2,7 @@
 
 _Github for Topic of prioritizing end-stage patients awaiting for transplantation_
 
+![alt text](https://github.com/lhthien09/WTUM_19_2022/blob/main/Image_UNOS/UNOS.png)
 ## Overview
 
 In the scope of the course Machine Learning Workshop, we would like to perform the analysis and
