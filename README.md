@@ -45,6 +45,19 @@ and Research (STAR) dataset.
 
 **Metric**:  out-of-sample area under the curve (AUC).
 
+There are some noted work related to this study of proposing some groundbreaking ML models:
+-  Optimal classification tree [1]{Bertsimas, D., Kung, J., Trichakis, N., Wang, Y., Hirose, R., Vagefi,
+P.: Development and validation of an optimized prediction of mortality for candidates awaiting
+liver transplantation.Am. J. Transplantat. 19, 1109–1118 (2018)}
+- Logistic Regression and gradient-boosting ensembles with decision trees [2](Byrd J., Balakrishnan
+S., Jiang X., Lipton Z.C. (2021) Predicting Mortality in Liver Transplant Candidates. In: ShabanNejad A., Michalowski M., Buckeridge D.L. (eds) Explainable AI in Healthcare and Medicine. Studies in Computational Intelligence, vol 914. Springer, Cham. https://doi.org/10.1007/978-3-
+030-53352-631)
+
+The outcomes from those study are slightly better in term of higher AUC than the traditional MELDScore model. But the question turns out to be, in the phase of deployment those models, is the model trust-worthy? Is the model being fair between ethnicity or gender? Do the important features taken after first model training cycle go alongside with domain knowledge from medical doctors? For single new instance, will the implemented model perform well?
+With the hope of replying those questions, we will try to reproduce the results from their study then apply XAI Methods to partially answers those questions.
+
+
+
 ## References:
 - Bertsimas, D., Kung, J., Trichakis, N., Wang, Y., Hirose, R., Vagefi, P.: Development and validation of an optimized prediction of mortality for candidates awaiting liver transplantation.Am. J. Transplantat. 19, 1109–1118 (2018)
 - Byrd J., Balakrishnan S., Jiang X., Lipton Z.C. (2021): Predicting Mortality in Liver Transplant Candidates. In Shaban-Nejad A., Michalowski M., Buckeridge D.L. (eds) Explainable AI in Healthcare and Medicine. Studies in Computational Intelligence, vol 914. Springer, Cham.
