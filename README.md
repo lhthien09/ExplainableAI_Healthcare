@@ -57,7 +57,7 @@ With the hope of replying those questions, we will try to reproduce the results 
 Partial Dependence Profile, Break Down method, Permutation-based variable important and Shapley values will be calculated to provide explanations for first-cycle of training models. Technical requirements:
 - Programming language: R
 - Needed packages: xgboost, LightGBM, catboost, ranger, caret, forester, DALEX (for explaining models) and fairmodels (arXiv: 2104.00607)
-- Member: Hoang Thien Ly
+- Member: **Hoang Thien Ly**
 - Report in RMarkdown + Presentation slides
 
 As in any new projects, the model performances can turn out to be lower than expectation. But the
