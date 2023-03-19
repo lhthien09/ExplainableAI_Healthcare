@@ -1,4 +1,4 @@
-# WTUM_19_2022
+# Explainable AI for healthcare
 
 _Github for Topic of prioritizing end-stage patients awaiting for transplantation_
 
