@@ -5,7 +5,7 @@ _Github for Topic of prioritizing end-stage patients awaiting for transplantatio
 ![alt text](https://github.com/lhthien09/WTUM_19_2022/blob/main/Image_UNOS/UNOS.png)
 ## Overview
 
-In the scope of the course Machine Learning Workshop, we would like to perform the analysis and
+In the scope of the topic, we would like to perform the analysis and
 investigate the possibility of using ML models in the feld of medicine. In detailed, the States currently
 adopts Sickest-First Policy, which means for the patients having end-stage disease (e.g: end-stage liver
 disease) and requiring transplantation a new organ, there is a formula used to assess the severity of
